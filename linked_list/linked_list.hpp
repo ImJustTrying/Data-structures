@@ -11,6 +11,7 @@
 #include <string>
 
 using std::string;
+using std::size_t;
 
 
 template <typename T> struct LinkedListNode {
@@ -25,12 +26,12 @@ template <typename T> class LinkedList {
         LinkedList();
         ~LinkedList();
 
-        T get(unsigned index);
+        T& get(unsigned index);
         void insert(unsigned index, T data);
         void set(unsigned index, T data);
         void remove(unsigned index);
-        T first();
-        T last();
+        T& first();
+        T& last();
         void pop_first();
         void pop_last();
         void append(T data);
@@ -38,6 +39,7 @@ template <typename T> class LinkedList {
         unsigned length();
         string inorder();
         string postorder();
+        T& operator[](size_t i);
 
     private:
         LinkedListNode<T>* head;
@@ -45,6 +47,11 @@ template <typename T> class LinkedList {
         unsigned size;
 };
 
+
+// ======== method implementations ========
+
+template <typename T>
+LinkedList<T>::LinkedList() : size{0}, head{nullptr}, tail{nullptr} {}
 
 template <typename T>
 LinkedList<T>::~LinkedList() {
@@ -57,10 +64,7 @@ LinkedList<T>::~LinkedList() {
 }
 
 template <typename T>
-LinkedList<T>::LinkedList() : size{0}, head{nullptr}, tail{nullptr} {}
-
-template <typename T>
-T LinkedList<T>::get(unsigned index) {
+T& LinkedList<T>::get(unsigned index) {
     if (index >= size) {
         throw std::out_of_range("Index is out of range");
     }
@@ -162,7 +166,7 @@ void LinkedList<T>::prepend(T data) {
 }
 
 template <typename T>
-T LinkedList<T>::first() {
+T& LinkedList<T>::first() {
     if (head == nullptr) {
         throw std::out_of_range("Index is out of range");
     }
@@ -170,7 +174,7 @@ T LinkedList<T>::first() {
 }
 
 template <typename T>
-T LinkedList<T>::last() {
+T& LinkedList<T>::last() {
     if (tail == nullptr) {
         throw std::out_of_range("Index is out of range");
     }
@@ -234,6 +238,11 @@ string LinkedList<T>::postorder() {
         curr = curr->prev;
     }
     return s;
+}
+
+template <typename T>
+T& LinkedList<T>::operator[](size_t i) {
+    return get(i);
 }
 
 #endif

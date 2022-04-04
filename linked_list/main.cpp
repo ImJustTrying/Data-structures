@@ -26,4 +26,5 @@ int main() {
     cout << "inorder: " << ll.inorder() << endl;
     cout << "postorder: " << ll.postorder() << endl;
     cout << "length: " << ll.length() << endl;
+    cout << "middle value: " << ll[ll.length() / 2] << endl;
 }
